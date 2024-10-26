@@ -1,5 +1,7 @@
 import pygame
 import sys
+
+from Functions import ips, important_ip
 from StartingScreen import Story
 from Intro import running_intro
 from HomeScreen import HomeScreenMenu
@@ -15,14 +17,17 @@ completed_games = []
 MENU, GAME1, GAME2, GAME3 = range(4)
 current_state = MENU
 
+
 # Story lines for the intro
 story_lines = [
     "Connecting to secure network...",
     "Authentication successful.",
     "Welcome, Agent X.",
     "Current mission: Infiltrate the mainframe of Ginky CO.",
+    f"Identifying vulnerable IPs... {ips}",
+    "These weak points are your gateways. Proceed with caution.",
     "Gather all classified data and avoid detection.",
-    "Type 'start' to begin your mission..."
+    "Attempt to connect to the correct IP to begin your mission..."
 ]
 
 def main():
