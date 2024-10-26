@@ -1,42 +1,147 @@
-import threading
+import pygame
+import time
 
+# Define the words list
 WORDS = ['science', 'computer', 'student', 'newhacks', 'mac', 'apple',
          'tree', 'basketball', 'football', 'soccer', 'hacker', 'hat',
-         'headphones', 'camera', 'word', 'easy', 'difficult', 'funny',
-         'water', 'orange']
+         'headphones', 'camera', 'word']
 
-def game():
-    print("HERE, you will be greeted with various words which you will need to type into"
-          "your device before you run out of time. Type 'ready' to begin...")
-    if input("").strip().lower() == 'ready':
-        words()
+
+# Story class for handling text display
+class Story:
+    def __init__(self, screen, font):
+        self.screen = screen
+        self.font = font
+        self.lines = []
+        self.line_index = 0
+        self.last_time = pygame.time.get_ticks()
+        self.delay = 500  # Delay for text animation
+
+    def update(self):
+        if self.line_index < len(self.lines):
+            current_time = pygame.time.get_ticks()
+            if current_time - self.last_time > self.delay:
+                self.last_time = current_time
+                self.line_index += 1
+
+    def draw(self):
+        y_offset = 20
+        for i in range(self.line_index):
+            self.screen.blit(self.font.render(self.lines[i], True, (255, 255, 255)), (50, y_offset + i * 30))
+
+    def add_line(self, line):
+        self.lines.append(line)
+
+
+def game(screen, font):
+    story = Story(screen, font)
+    story.add_line("Type 'ready' to begin...")
+
+    input_text = ""
+    waiting_for_input = True
+
+    while True:
+        screen.fill((0, 0, 0))  # Clear screen
+        story.update()  # Update the story
+        story.draw()  # Draw the story lines
+
+        # Draw the current input
+        input_surface = font.render(f"Input: {input_text}", True, (255, 255, 255))
+        screen.blit(input_surface, (50, 300))
+
+        pygame.display.flip()  # Update the display
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+
+            if waiting_for_input:
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN:
+                        if input_text.lower() == 'ready':
+                            story.add_line("Game starting...")
+                            waiting_for_input = False
+                            time.sleep(1)  # Pause before starting the game
+                            words(screen, font, story)
+                        else:
+                            story.add_line("Please type 'ready' to start.")
+                            input_text = ""  # Clear input if not ready
+                    elif event.key == pygame.K_BACKSPACE:
+                        input_text = input_text[:-1]  # Remove last character
+                    else:
+                        input_text += event.unicode  # Append the new character
+
+
+def words(screen, font, story):
+    for word in WORDS:
+        # Only add the prompt for the current word once
+        story.add_line(f"Type the word: {word}")
+        answer = timer(word, 3, screen, font, story)
+
+        # Check if the answer is incorrect
+        if answer.strip().lower() != word:
+            story.add_line("WRONG")
+            break
     else:
+        story.add_line("Congratulations! You've completed the game!")
+
+    # Display the final message
+    while True:
+        screen.fill((0, 0, 0))  # Clear screen
+        story.update()  # Update the story
+        story.draw()  # Draw the story lines
+        pygame.display.flip()  # Update the display
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+
+        # Add a short delay before closing the game
+        time.sleep(2)
+        pygame.quit()  # Close the window
         exit()
 
-def words():
-    for word in WORDS:
-        answer = timer(word, 3)
-        if answer.strip().lower() != word:
-            print("WRONG")
-            exit()
+
+def timer(wordie, time, screen, font, story):
+    # Display the word to type
+    pygame.display.flip()
+
+    input_text = ""
+    start_time = pygame.time.get_ticks()
+
+    while True:
+        elapsed_time = (pygame.time.get_ticks() - start_time) / 1000  # Convert to seconds
+        if elapsed_time >= time:
+            story.add_line("\nYOU RAN OUT OF TIME!!")
+            return ""
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    return input_text  # Return the typed input
+                elif event.key == pygame.K_BACKSPACE:
+                    input_text = input_text[:-1]  # Remove last character
+                else:
+                    input_text += event.unicode  # Append the new character
+
+        # Display current input
+        screen.fill((0, 0, 0))  # Clear screen
+        story.update()  # Update the story
+        story.draw()  # Draw the story lines
+        input_surface = font.render(f"Input: {input_text}", True, (255, 255, 255))
+        screen.blit(input_surface, (50, 550))
+        pygame.display.flip()  # Update the display
 
 
-def timer(wordie, time):
-    print(f"Word: {wordie}")
-    user_input = [None]
-
-    def get_input():
-        user_input[0] = input()
-
-    input_thread = threading.Thread(target=get_input)
-    input_thread.start()
-
-    input_thread.join(time)
-
-    if input_thread.is_alive():
-        print("\nYOU RAN OUT OF TIME!!")
-        return ""
-    else:
-        return user_input[0]
-
-game()
+# Pygame initialization
+pygame.init()
+screen = pygame.display.set_mode((800, 600))
+pygame.display.set_caption("Typing Game")
+font = pygame.font.Font(None, 36)
+game(screen, font)
+pygame.quit()

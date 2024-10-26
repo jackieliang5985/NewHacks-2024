@@ -37,7 +37,7 @@ class Story:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN:
                 print(f"User input: {self.input_text}")
-                self.input_text = ""
+                # self.input_text = ""
             elif event.key == pygame.K_BACKSPACE:
                 self.input_text = self.input_text[:-1]
             else:
