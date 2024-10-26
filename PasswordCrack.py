@@ -1,36 +1,59 @@
 import random
+import pygame
 
+from StartingScreen import Story
+
+# Define password levels
 password_levels = {
     "easy": ["abc", "123"],
     "medium": ["hack", "code", "data", "link"],
     "hard": ["password1", "username1"],
 }
+
+# Randomly select a password level and the corresponding password
 password_level = random.choice(list(password_levels.keys()))
 password = random.choice(password_levels[password_level])
 
-# Shared variables
+# Initialize shared variables
 attempts = 0
 hint_used = False
 game_over = False
 
+# Initialize Pygame
+pygame.init()
+screen = pygame.display.set_mode((800, 600))
+pygame.display.set_caption("Hacker Intro")
+font = pygame.font.Font(pygame.font.get_default_font(), 24)
+
+
 def dictionary_attack(guess):
+    """Function to check if the user's guess matches the password."""
     global attempts, game_over
     attempts += 1
-    if guess == password:
-        game_over = True
+
+    # Compare normalized guess to password
+    if guess.strip().lower() == password.lower():
+        game_over = True  # Set game_over to True if the guess is correct
         return "Access Granted!"
-    if attempts > 3:
-        return False
+
+    # End game if maximum attempts are reached
+    if attempts >= 3:
+        game_over = True
+        return "You've exceeded the maximum number of attempts. Access Denied."
+
     return "Incorrect guess."
 
+
 def get_hint():
+    """Provide a hint based on the difficulty level."""
     global hint_used
     if hint_used:
         return "Hint already used!"
     hint_used = True
     if password_level == "hard":
-        return f"Hint: The password comprises of a widely used pharse, starting with '{password[0]}', and ends with {password[len(password)-1]}"
+        return f"Hint: The password comprises a widely used phrase, starting with '{password[0]}', and ending with '{password[-1]}'."
     return f"Hint: The password starts with '{password[0]}' and has {len(password)} characters."
+
 
 def play_game_1():
     global attempts, hint_used, game_over, password_level, password
@@ -38,22 +61,66 @@ def play_game_1():
     hint_used = False
     game_over = False
 
-    print(f"You are playing the '{password_level}' level.")
+    storyline = [
+        "Welcome, Agent X. You've been given a hint of some 'vulnerability' within Ginky's bank account.",
+        "Your task is to find out what his password is, but beware; you only have a few tries."
+    ]
 
-    while not game_over:
-        guess = input("Enter your guess or type 'hint' for a hint: ").strip()
+    story = Story(screen, font, storyline)
+    feedback = ""  # Variable to hold feedback messages
+    hint_message = ""  # Variable to hold the hint message
 
-        if guess.lower() == "hint":
-            print(get_hint())
-            continue
+    while True:  # Main game loop
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                return
 
-        feedback = dictionary_attack(guess)
-        print(feedback)
+            # Handle input for the story
+            story.handle_input(event)
 
+            # Check for user input
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    # Use dictionary_attack to check the input text
+                    guess_feedback = dictionary_attack(story.input_text)
+                    print(story.input_text)
+                    feedback = guess_feedback  # Store feedback message
+                    story.input_text = ""  # Reset input text after checking
+                elif event.key == pygame.K_BACKSPACE:
+                    story.input_text = story.input_text[:-1]
+                elif event.key == pygame.K_h:  # Hint when 'h' is pressed
+                    hint_message = get_hint()
+
+        # Update the story display
+        story.update()
+
+        # Clear screen with black background
+        screen.fill((0, 0, 0))
+
+        # Draw the story and input
+        story.draw()
+        story.draw_input()
+
+        # Render and draw feedback message
+        feedback_surface = font.render(feedback, True, (0, 255, 0))
+        screen.blit(feedback_surface, (50, 550))  # Display feedback
+
+        # Render and draw hint message
+        hint_surface = font.render(hint_message, True, (255, 255, 0))  # Yellow for hints
+        screen.blit(hint_surface, (50, 580))
+
+        # Update display
+        pygame.display.flip()
+
+        # Add a small delay to control frame rate
+        pygame.time.delay(50)
+
+        # Break loop if game is over
         if game_over:
-            if feedback == "Access Granted!":
-                print("Congratulations! You've successfully accessed the system.")
-            else:
-                print("You've exceeded the maximum number of attempts. Access Denied.")
+            pygame.time.delay(2000)  # Show final message for 2 seconds
+            break
 
+
+# Start the game
 play_game_1()

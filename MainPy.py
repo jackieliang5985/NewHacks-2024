@@ -37,7 +37,7 @@ def main():
         current_time = pygame.time.get_ticks()  # Get current time
 
         # Randomly trigger the firewall every 2 Mins (20000 milliseconds)
-        if current_time - last_firewall_trigger > 120000:  # Check if 20 seconds have passed
+        if current_time - last_firewall_trigger > 120000:  # Check if 2 Mins have passed
             last_firewall_trigger = current_time  # Reset the timer
             game_selected = random.choice([pattern_recognition, maze_navigation])
 
