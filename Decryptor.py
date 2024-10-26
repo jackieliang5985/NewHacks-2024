@@ -2,9 +2,7 @@
 import random
 
 WORDS_DECRYPTOR = ['science', 'computer', 'student', 'newhacks', 'mac', 'apple',
-                   'tree', 'basketball', 'football', 'soccer', 'hacker', 'hat',
-                   'headphones', 'camera', 'word', 'easy', 'difficult', 'funny',
-                   'water', 'orange']
+                   'tree', 'basketball', 'football', 'soccer']
 def decryptor():
     word1 = random.choice(WORDS_DECRYPTOR)
     word2 = random.choice(WORDS_DECRYPTOR)
