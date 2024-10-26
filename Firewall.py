@@ -49,10 +49,10 @@ def pattern_recognition(screen):
         screen.fill(BLACK)
 
         font = pygame.font.Font(None, 36)
-        input_surface = font.render(f"Current Input: {input_text}", True, WHITE)
+        input_surface = font.render(f"Current Input (One colour each time): {input_text}", True, WHITE)
         screen.blit(input_surface, (100, 350))
 
-        guessed_pattern_surface = font.render(f"Guessed Pattern: {', '.join(player_pattern)}", True, WHITE)
+        guessed_pattern_surface = font.render(f"Guessed Total Pattern: {', '.join(player_pattern)}", True, WHITE)
         screen.blit(guessed_pattern_surface, (100, 400))
 
         pygame.display.flip()
@@ -78,11 +78,10 @@ def generate_maze(width, height):
         for dx, dy in directions:
             nx, ny = x + dx, y + dy
             if 0 < nx < width and 0 < ny < height and maze[ny][nx] == "#":
-                maze[y + dy // 2][x + dx // 2] = " "  # Carve a path
-                maze[ny][nx] = " "  # Carve the next cell
-                carve_passages_from(nx, ny)  # Recursively carve from the new cell
+                maze[y + dy // 2][x + dx // 2] = " "
+                maze[ny][nx] = " "
+                carve_passages_from(nx, ny)
 
-    # Start carving from the initial position
     maze[1][1] = " "  # Starting point
     carve_passages_from(1, 1)
 
