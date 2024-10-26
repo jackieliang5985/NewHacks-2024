@@ -3,6 +3,8 @@ import sys
 from StartingScreen import Story
 from Intro import running_intro
 from HomeScreen import HomeScreenMenu
+from Firewall import pattern_recognition, maze_navigation
+import random
 
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
@@ -24,25 +26,51 @@ story_lines = [
 ]
 
 def main():
+    global current_state
     pygame.display.set_caption("Hacking Game")
+    home_menu = HomeScreenMenu(screen)
+
 
     game_running = True
     while game_running:
+
+        # Randomly trigger the firewall
+        if random.randint(0, 500) < 5:  # 5% chance to trigger firewall
+            game_selected = random.choice([pattern_recognition, maze_navigation])
+
+            if game_selected(screen):
+                print("Firewall bypassed!")
+            else:
+                game_running = False
+                pygame.quit()
+                sys.exit()
+                #print("Failed to bypass the firewall!")
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
 
-        if current_state == MENU:
-            home = HomeScreenMenu(screen)
+            selected_mode = home_menu.handle_input(event)
+            if selected_mode != 0:  # A game mode was selected
+                current_state = selected_mode  # Update the state to the selected game
 
-        elif current_state == GAME1:
-            "run game 1"
-            print("game1")
+        home_menu.draw()
+        pygame.display.flip()
 
-        elif current_state == GAME2:
-            "run game 2"
-            print("game2")
+        # Add game handling logic based on current_state
+        if current_state == 1:
+            print("Starting Game 1...")
+            # Call game 1 function or logic here
+            current_state = 0  # Reset back to home screen after game
+        elif current_state == 2:
+            print("Starting Game 2...")
+            # Call game 2 function or logic here
+            current_state = 0  # Reset back to home screen after game
+        elif current_state == 3:
+            print("Starting Game 3...")
+            # Call game 3 function or logic here
+            current_state = 0  # Reset back to home screen after game
 
         pygame.display.flip()
 
