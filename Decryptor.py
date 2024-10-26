@@ -40,7 +40,7 @@ def decryptor():
         message = ("People always have my number of wishes, alongside how many "
                    "bears are used in the nostalgic fairy tales!")
 
-    print(f"NOW, your encrypted word is: '{caesared}' using Caesar Cipher with the shift "
+    print(f"NOW, your encrypted word is: '{caesared}', decrypt through reversing Caesar Cipher with the shift "
           f"being the answer to the following riddle: \n{message}")
 
     while attempt2 > 0:
