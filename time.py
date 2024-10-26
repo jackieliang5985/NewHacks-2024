@@ -27,7 +27,7 @@ class Story:
     def draw(self):
         y_offset = 20
         for i in range(self.line_index):
-            self.screen.blit(self.font.render(self.lines[i], True, (255, 255, 255)), (50, y_offset + i * 30))
+            self.screen.blit(self.font.render(self.lines[i], True, (0, 255, 0)), (50, y_offset + i * 30))
 
     def add_line(self, line):
         self.lines.append(line)
@@ -35,6 +35,7 @@ class Story:
 
 def game(screen, font):
     story = Story(screen, font)
+    story.add_line("The standardized typing test: type each word which appears...")
     story.add_line("Type 'ready' to begin...")
 
     input_text = ""
@@ -46,7 +47,7 @@ def game(screen, font):
         story.draw()  # Draw the story lines
 
         # Draw the current input
-        input_surface = font.render(f"Input: {input_text}", True, (255, 255, 255))
+        input_surface = font.render(f"Input: {input_text}", True, (0, 255, 0))
         screen.blit(input_surface, (50, 550))
 
         pygame.display.flip()  # Update the display
@@ -113,7 +114,7 @@ def timer(wordie, time, screen, font, story):
     while True:
         elapsed_time = (pygame.time.get_ticks() - start_time) / 1000  # Convert to seconds
         if elapsed_time >= time:
-            story.add_line("\nYOU RAN OUT OF TIME AND HAVE BEEN COMPROMISED!!")
+            story.add_line("YOU RAN OUT OF TIME AND HAVE BEEN COMPROMISED!!")
             return ""
 
         for event in pygame.event.get():
@@ -133,7 +134,7 @@ def timer(wordie, time, screen, font, story):
         screen.fill((0, 0, 0))  # Clear screen
         story.update()  # Update the story
         story.draw()  # Draw the story lines
-        input_surface = font.render(f"Input: {input_text}", True, (255, 255, 255))
+        input_surface = font.render(f"Input: {input_text}", True, (0, 255, 0))
         screen.blit(input_surface, (50, 550))
         pygame.display.flip()  # Update the display
 
