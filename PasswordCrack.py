@@ -62,11 +62,15 @@ def play_game_1():
     game_over = False
 
     storyline = [
-        "Welcome, Agent X. You've been given a hint of some 'vulnerability' within Ginky's bank account.",
-        "Your task is to find out what his password is, but beware; you only have a few tries."
+        "Welcome, Agent X.",
+        "You've been given a hint of some 'vulnerability'",
+        "within Ginky's bank account.",
+        "Your task is to find out what his password is,",
+        " but beware; you only have a few tries.",
+        "We've found some information; please press h"
     ]
 
-    story = Story(screen, font, storyline)
+    story = Story(screen, font, storyline, 10)
     feedback = ""  # Variable to hold feedback messages
     hint_message = ""  # Variable to hold the hint message
 
@@ -108,7 +112,7 @@ def play_game_1():
 
         # Render and draw hint message
         hint_surface = font.render(hint_message, True, (255, 255, 0))  # Yellow for hints
-        screen.blit(hint_surface, (50, 580))
+        screen.blit(hint_surface, (50, 530))
 
         # Update display
         pygame.display.flip()

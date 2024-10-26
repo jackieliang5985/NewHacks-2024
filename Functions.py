@@ -27,12 +27,16 @@ def draw_text(text, x, y, color=WHITE):
         screen.blit(line_surface, (x, y + i * 20))
 
 # Function to generate random IPs
-def generate_random_ips(count=2):
+def generate_random_ips(count=3):
     ip_list = []
     for _ in range(count):
         ip = f"{random.randint(192, 223)}.{random.randint(0, 255)}.{random.randint(0, 255)}.{random.randint(1, 254)}"
         ip_list.append(ip)
     return ip_list
+
+
+ips = generate_random_ips()
+important_ip = random.choice(ips)
 
 def process_command(command):
     global current_node, available_ips, output_text
