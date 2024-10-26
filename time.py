@@ -2,9 +2,9 @@ import pygame
 import time
 
 # Define the words list
-WORDS = ['science', 'computer', 'student', 'newhacks', 'mac', 'apple',
-         'tree', 'basketball', 'football', 'soccer', 'hacker', 'hat',
-         'headphones', 'camera', 'word']
+WORDS = ['computer', 'student', 'newhacks', 'apple',
+         'basketball', 'soccer', 'hacker', 'hat',
+         'headphones', 'camera']
 
 
 # Story class for handling text display
@@ -47,7 +47,7 @@ def game(screen, font):
 
         # Draw the current input
         input_surface = font.render(f"Input: {input_text}", True, (255, 255, 255))
-        screen.blit(input_surface, (50, 300))
+        screen.blit(input_surface, (50, 550))
 
         pygame.display.flip()  # Update the display
 
@@ -81,10 +81,10 @@ def words(screen, font, story):
 
         # Check if the answer is incorrect
         if answer.strip().lower() != word:
-            story.add_line("WRONG")
+            story.add_line("INCORRECT, YOU HAVE BEEN COMPROMISED!")
             break
     else:
-        story.add_line("Congratulations! You've completed the game!")
+        story.add_line("SUCCESS! YOU HAVE PASSED THE TYPING TASK.")
 
     # Display the final message
     while True:
@@ -113,7 +113,7 @@ def timer(wordie, time, screen, font, story):
     while True:
         elapsed_time = (pygame.time.get_ticks() - start_time) / 1000  # Convert to seconds
         if elapsed_time >= time:
-            story.add_line("\nYOU RAN OUT OF TIME!!")
+            story.add_line("\nYOU RAN OUT OF TIME AND HAVE BEEN COMPROMISED!!")
             return ""
 
         for event in pygame.event.get():
@@ -141,7 +141,7 @@ def timer(wordie, time, screen, font, story):
 # Pygame initialization
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
-pygame.display.set_caption("Typing Game")
+pygame.display.set_caption("Typing Task")
 font = pygame.font.Font(None, 36)
 game(screen, font)
 pygame.quit()
