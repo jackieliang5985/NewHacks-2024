@@ -30,12 +30,15 @@ def main():
     pygame.display.set_caption("Hacking Game")
     home_menu = HomeScreenMenu(screen)
 
-
     game_running = True
-    while game_running:
+    last_firewall_trigger = pygame.time.get_ticks()  # Initialize the timer
 
-        # Randomly trigger the firewall
-        if random.randint(0, 500) < 5:  # 5% chance to trigger firewall
+    while game_running:
+        current_time = pygame.time.get_ticks()  # Get current time
+
+        # Randomly trigger the firewall every 2 Mins (20000 milliseconds)
+        if current_time - last_firewall_trigger > 120000:  # Check if 20 seconds have passed
+            last_firewall_trigger = current_time  # Reset the timer
             game_selected = random.choice([pattern_recognition, maze_navigation])
 
             if game_selected(screen):
@@ -44,7 +47,7 @@ def main():
                 game_running = False
                 pygame.quit()
                 sys.exit()
-                #print("Failed to bypass the firewall!")
+                # print("Failed to bypass the firewall!")
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
