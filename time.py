@@ -6,7 +6,8 @@ WORDS = ['science', 'computer', 'student', 'newhacks', 'mac', 'apple',
          'water', 'orange']
 
 def game():
-    print("HERE, you will be greeted with various words which you will need to type into"
+    print("Agent X! You need to pass Ginky Co's standardized typing tests to follow through with your mission."
+          "\nType each word which appears on "
           "your device before you run out of time. Type 'ready' to begin...")
     if input("").strip().lower() == 'ready':
         words()

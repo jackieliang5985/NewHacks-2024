@@ -14,7 +14,7 @@ def decryptor():
     attempt1 = 3
     attempt2 = 3
 
-    print("YOU MUST DECRYPT: First let's unscramble, then de-cipher, shall we??")
+    print("Agent X, decrypt the following key words found in Ginky Co's emails to find out their secrets...")
     print(f"Your scrambled word is: {scrambled}")
 
     while attempt1 > 0:
