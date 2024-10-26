@@ -3,7 +3,7 @@ import pygame
 
 # Word list for the decryptor mini-game
 WORDS_DECRYPTOR = [
-    'science', 'computer', 'student', 'newhacks', 'mac', 'apple',
+    'science', 'computer', 'student', 'newhacks', 'hello', 'apple',
     'tree', 'basketball', 'football', 'soccer', 'hacker', 'hat',
     'headphones', 'camera', 'word', 'easy', 'difficult', 'funny',
     'water', 'orange'
@@ -50,7 +50,7 @@ class Story:
 
         # Draw feedback messages
         for j, feedback_msg in enumerate(self.feedback):
-            self.screen.blit(self.font.render(feedback_msg, True, (255, 0, 0)),
+            self.screen.blit(self.font.render(feedback_msg, True, (0, 255, 0)),
                              (50, 500 + j * 30))
 
     def handle_input(self, event):
@@ -108,14 +108,14 @@ def decryptor(screen, font):
     correct1, correct2 = False, False
 
     hints = [
-        "I'm unique, like no one else, yet often paired with zero.",
-        "I am a pair, always together! People call me Peace!",
-        "People always have my number of wishes and bear tales!"
+        "I'm unique, yet often paired with zero.",
+        "I am a pair, always together! People call me Peace.",
+        "In many fairy tales, my number is key: wishes and bears."
     ]
     shift_hint = hints[shift - 1]
 
     storyline = [
-        "YOU MUST DECRYPT: Unscramble, then decipher the code!",
+        "YOU MUST DECRYPT: Unscramble, then decipher the code...",
         f"Scrambled word: {scrambled}"
     ]
     story = Story(screen, font, storyline)
@@ -144,23 +144,24 @@ def decryptor(screen, font):
                 # First stage: Unscramble word
                 if not correct1:
                     if user_input.lower() == word1:
-                        story.add_feedback("SUCCESS! Proceed to next challenge.")
+                        story.add_feedback("SUCCESS, now reverse the Caesar Cipher")
                         correct1 = True
-                        story.lines.append(f"Caesar Encrypted word: '{caesared}' - Hint: {shift_hint}")
+                        story.lines.append(f"Caesar Encrypted word: '{caesared}'")
+                        story.lines.append(f"- Hint for shift: {shift_hint}")
                     else:
                         attempts1 -= 1
-                        story.add_feedback("FAIL" if attempts1 > 0 else "You've lost!")
+                        story.add_feedback("FAIL" if attempts1 > 0 else "YOU'VE BEEN COMPROMISED")
                     if attempts1 == 0:
                         running = False
 
                 # Second stage: Caesar decryption
                 elif correct1 and not correct2:
                     if user_input.lower() == word2:
-                        story.add_feedback("Correct!")  # Display "Correct!" message
+                        story.add_feedback("SUCCESSFULLY DECRYPTED")  # Display "Correct!" message
                         correct2 = True
                     else:
                         attempts2 -= 1
-                        story.add_feedback("FAIL" if attempts2 > 0 else "You've lost!")
+                        story.add_feedback("FAIL" if attempts2 > 0 else "YOU'VE BEEN COMPROMISED")
                     if attempts2 == 0:
                         running = False
 
@@ -168,7 +169,7 @@ def decryptor(screen, font):
 
         # Delay before quitting if the challenge is completed successfully
         if correct2:
-            story.add_feedback("Correct!")
+            story.add_feedback("SUCCESSFULLY DECRYPTED")
             pygame.time.delay(3000)  # Keep "Correct!" message visible for 3 seconds
             running = False
 
