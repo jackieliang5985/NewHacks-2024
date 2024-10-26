@@ -5,7 +5,7 @@ pygame.init()
 
 SCREEN_WIDTH, SCREEN_HEIGHT = 800, 600
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption("Hacker Simulator")
+pygame.display.set_caption("Hack In")
 
 font = pygame.font.Font(pygame.font.get_default_font(), 18)
 
