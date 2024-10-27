@@ -13,12 +13,14 @@ from HomeScreen import HomeScreenMenu
 from Firewall import pattern_recognition, maze_navigation
 import random
 
+from WinnerScreen import winner
+
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
 pygame.display.set_caption("Hacker Intro")
 font = pygame.font.Font(pygame.font.get_default_font(), 18)
 
-completed_games = []
+completed_games = set()
 MENU, GAME1, GAME2, GAME3 = range(4)
 current_state = MENU
 
@@ -34,6 +36,30 @@ story_lines = [
     "Gather all classified data and avoid detection.",
     "Attempt to connect to the correct IP to begin your mission..."
 ]
+
+winning_line = ["ACCESS GRANTED: Welcome, Agent...",
+    "System Breach Confirmed. Gaining Access to Corporate Data Servers...",
+    "Security Clearance Level: 9 - Top Secret Access Enabled",
+    "Decrypting Files...",
+    "Loading Classified Data...",
+    "",
+    "Name: John Doe | Position: Head of R&D | ID: JDOE-937",
+    "Email: john.doe@corporation.com | Phone: (555) 0198-273",
+    "Last Login: 2024-10-23 14:35:12",
+    " ",
+    "Name: Sarah Blake | Position: Director of Finance | ID: SBLK-102",
+    "Email: sarah.blake@corporation.com | Phone: (555) 0145-389",
+    "Last Login: 2024-10-21 08:20:05",
+    "",
+    "Name: Dr. Eleanor Chen | Position: Chief Scientist | ID: ECHE-553",
+    "Email: eleanor.chen@corporation.com | Phone: (555) 0179-552",
+    "Last Login: 2024-10-20 17:58:30",
+    "",
+    "Warning: Security Protocol Activated!",
+    "Routing through Secure Proxy... Masking IP Address...",
+    "Accessing Financial Records... || Loading Sensitive Company Intelligence...",
+    "File Download Complete. Exiting System...",
+    "Mission Accomplished. Disconnecting from Network..."]
 
 def main():
     global current_state
@@ -82,7 +108,7 @@ def main():
                 sys.exit()
                 #call losing window
 
-            completed_games.append(current_state)
+            completed_games.add(current_state)
             current_state = 0  # Reset back to home screen after game
 
         elif current_state == 2:
@@ -94,7 +120,7 @@ def main():
                 pygame.quit()
                 sys.exit()
 
-            completed_games.append(current_state)
+            completed_games.add(current_state)
             current_state = 0  # Reset back to home screen after game
 
         elif current_state == 3:
@@ -105,14 +131,16 @@ def main():
                 pygame.quit()
                 sys.exit()
 
-            completed_games.append(current_state)
+            completed_games.add(current_state)
             current_state = 0  # Reset back to home screen after game
 
         pygame.display.flip()
 
-        if 1 in completed_games and 2 in completed_games and 3 in completed_games:
+        if completed_games == {1,2,3}:
             game_running = False
-            #winner screen
+            win_story = Story(screen, font, winning_line)
+            winner(screen, font, win_story)
+
 
 story = Story(screen, font, story_lines)
 running_intro(screen, font, story_lines, main, story)

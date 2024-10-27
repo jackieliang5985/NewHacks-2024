@@ -1,6 +1,5 @@
 import random
 import pygame
-
 from StartingScreen import Story
 
 # Define password levels
@@ -18,6 +17,7 @@ password = random.choice(password_levels[password_level])
 attempts = 0
 hint_used = False
 game_over = False
+win = False
 
 # Initialize Pygame
 pygame.init()
@@ -28,17 +28,19 @@ font = pygame.font.Font(pygame.font.get_default_font(), 24)
 
 def dictionary_attack(guess):
     """Function to check if the user's guess matches the password."""
-    global attempts, game_over
+    global attempts, game_over, win
     attempts += 1
 
     # Compare normalized guess to password
     if guess.strip().lower() == password.lower():
-        game_over = True  # Set game_over to True if the guess is correct
+        game_over = True
+        win = True  # Set win to True if the guess is correct
         return "Access Granted!"
 
     # End game if maximum attempts are reached
     if attempts >= 3:
         game_over = True
+        win = False  # Set win to False if max attempts reached
         return "You've exceeded the maximum number of attempts. Access Denied."
 
     return "Incorrect guess."
@@ -56,10 +58,11 @@ def get_hint():
 
 
 def play_game_1():
-    global attempts, hint_used, game_over, password_level, password
+    global attempts, hint_used, game_over, password_level, password, win
     attempts = 0
     hint_used = False
     game_over = False
+    win = False
 
     storyline = [
         "Welcome, Agent X.",
@@ -78,7 +81,7 @@ def play_game_1():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-                return
+                return False  # Return False if game is quit
 
             # Handle input for the story
             story.handle_input(event)
@@ -88,7 +91,6 @@ def play_game_1():
                 if event.key == pygame.K_RETURN:
                     # Use dictionary_attack to check the input text
                     guess_feedback = dictionary_attack(story.input_text)
-                    print(story.input_text)
                     feedback = guess_feedback  # Store feedback message
                     story.input_text = ""  # Reset input text after checking
                 elif event.key == pygame.K_BACKSPACE:
@@ -123,8 +125,4 @@ def play_game_1():
         # Break loop if game is over
         if game_over:
             pygame.time.delay(2000)  # Show final message for 2 seconds
-            break
-
-
-# Start the game
-#play_game_1()
+            return win  # Return True if win, False if loss
