@@ -14,7 +14,7 @@ class HomeScreenMenu:
 
     def draw(self):
         self.screen.fill((0, 0, 50))  # Background color
-        self.draw_text("Hacking into Cryptex Intelligence", 220, 150)
+        self.draw_text("Hacking into Cryptex Intelligence", 140, 150)
         self.draw_file_buttons()
 
     def draw_text(self, text, x, y):
