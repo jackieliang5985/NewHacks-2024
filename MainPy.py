@@ -67,15 +67,27 @@ def main():
     home_menu = HomeScreenMenu(screen, completed_games)
 
     game_running = True
-    last_firewall_trigger = pygame.time.get_ticks()  # Initialize the timer
+    last_firewall_trigger = pygame.time.get_ticks()
+    game_start_time = pygame.time.get_ticks()
 
     while game_running:
-        current_time = pygame.time.get_ticks()  # Get current time
+        current_time = pygame.time.get_ticks()
+        elapsed_time = current_time - game_start_time
 
-        # Randomly trigger the firewall every 2 Mins (20000 milliseconds)
-        if current_time - last_firewall_trigger > 2000: #120000
-            last_firewall_trigger = current_time
-            trigger_firewall_minigame(screen)
+        if elapsed_time > 300000:  # 5 minutes
+            print("REACHED")
+            game_running = False
+            pygame.quit()
+            sys.exit()
+
+        elapsed_minutes = (elapsed_time // 60000) % 60
+        elapsed_seconds = (elapsed_time // 1000) % 60
+        timer_text = f"{elapsed_minutes:02}:{elapsed_seconds:02}"  # Format as MM:SS
+
+        # Check if we should trigger the firewall
+        if current_time - last_firewall_trigger > 10000:  # 2 minutes in milliseconds
+            last_firewall_trigger = current_time  # Update the last trigger time
+            trigger_firewall_minigame(screen)  # Call the function to trigger the firewall
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -87,6 +99,11 @@ def main():
                 current_state = selected_mode  # Update the state to the selected game
 
         home_menu.draw()
+
+        # Render the timer text
+        timer_surface = font.render(timer_text, True, (255, 255, 255))
+        screen.blit(timer_surface, (10, 10))
+
         pygame.display.flip()
 
         # Add game handling logic based on current_state
@@ -98,7 +115,7 @@ def main():
                 game_running = False
                 pygame.quit()
                 sys.exit()
-                #call losing window
+                # call losing window
 
             completed_games.add(current_state)
             current_state = 0  # Reset back to home screen after game
@@ -128,13 +145,13 @@ def main():
 
         pygame.display.flip()
 
-        if completed_games == {1,2,3}:
+        if completed_games == {1, 2, 3}:
             game_running = False
             win_story = Story(screen, font, winning_line)
             winner(screen, font, win_story)
-
 
 story = Story(screen, font, story_lines)
 running_intro(screen, font, story_lines, main, story)
 pygame.quit()
 sys.exit()
+
