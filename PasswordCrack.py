@@ -10,7 +10,7 @@ password_levels = {
 }
 
 # Randomly select a password level and the corresponding password
-password_level = "easy"
+password_level = random.choice(list(password_levels.keys()))
 password = random.choice(password_levels[password_level])
 
 # Initialize shared variables
@@ -35,16 +35,15 @@ def dictionary_attack(guess):
     if guess.strip().lower() == password.lower():
         game_over = True
         win = True  # Set win to True if the guess is correct
-        return "Access Granted!"
+        return "Access Granted!"  # Ensure this is a string
 
     # End game if maximum attempts are reached
     if attempts >= 3:
         game_over = True
         win = False  # Set win to False if max attempts reached
-        return ("You've exceeded the maximum number of attempts", "Access Denied.")
+        return "You've exceeded the maximum number of attempts."  # Ensure this is a string
 
-    return "Incorrect guess."
-
+    return "Incorrect guess."  # Ensure this is a string
 
 def get_hint():
     """Provide a hint based on the difficulty level."""
@@ -113,6 +112,7 @@ def play_game_1():
         story.draw_input()
 
         # Render and draw feedback message
+        print(f"Feedback before rendering: {feedback}")
         feedback_surface = font.render(feedback, True, (0, 255, 0))
         screen.blit(feedback_surface, (50, 550))  # Display feedback
 
