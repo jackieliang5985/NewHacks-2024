@@ -64,7 +64,7 @@ winning_line = ["ACCESS GRANTED: Welcome, Agent...",
 def main():
     global current_state
     pygame.display.set_caption("Hacking Game")
-    home_menu = HomeScreenMenu(screen)
+    home_menu = HomeScreenMenu(screen, completed_games)
 
     game_running = True
     last_firewall_trigger = pygame.time.get_ticks()  # Initialize the timer
