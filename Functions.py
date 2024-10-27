@@ -34,9 +34,9 @@ def generate_random_ips(count=3):
         ip_list.append(ip)
     return ip_list
 
-
 ips = generate_random_ips()
 important_ip = random.choice(ips)
+
 
 def process_command(command):
     global current_node, available_ips, output_text

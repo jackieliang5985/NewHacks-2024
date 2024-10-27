@@ -1,0 +1,64 @@
+# STORY LINES
+Connecting to secure network...
+Authentication successful.
+Welcome, Agent X.
+Current mission: Infiltrate the mainframe of Cryptex Intelligence.
+Identifying vulnerable IPs... {ips}
+These weak points are your gateways. Proceed with caution.
+Gather all classified data and avoid detection.
+Attempt to connect to the correct IP to begin your mission...
+
+# WINNING LINES
+ACCESS GRANTED: Welcome, Agent...
+System Breach Confirmed. Gaining Access to Cryptex Intelligence Data Vault...
+Security Clearance Level: 9 - Top Secret Access Enabled
+Decrypting classified files...
+Loading sensitive intelligence data...
+Name: John Doe | Position: Head of Cybersecurity | ID: JDOE-937
+Email: john.doe@cryptex.com | Phone: (555) 0198-273
+Last Login: 2024-10-23 14:35:12
+Name: Sarah Blake | Position: Director of Operations | ID: SBLK-102
+Email: sarah.blake@cryptex.com | Phone: (555) 0145-389
+Last Login: 2024-10-21 08:20:05
+Name: Dr. Eleanor Chen | Position: Chief Data Analyst | ID: ECHE-553
+Email: eleanor.chen@cryptex.com | Phone: (555) 0179-552
+Last Login: 2024-10-20 17:58:30
+Warning: Advanced Security Protocol Activated!
+Routing through Secure Proxy... Masking IP Address...
+Accessing Financial and Operational Records... || Loading Sensitive Intelligence Data...
+File Download Complete. Exiting System...
+Mission Accomplished. Disconnecting from Network...
+
+# LOSING LINES
+ACCESS DENIED: Intrusion Detected by Cryptex Security!
+System Alert: Unauthorized Access Attempted...
+Security Clearance Level: LOW - Immediate Lockdown Engaged
+Tracing IP Address... Initiating Countermeasures...
+Warning: Your activities have been logged and flagged.
+User ID: AGENT-404 | Last Known Location: SERVER ROOM 3A
+Timestamp: 2024-10-26 15:42:09
+Alert: Security personnel dispatched to your location.
+Camera Feed Activated: Visual Confirmation Required...
+Security Protocol: User Detained for Further Investigation.
+Data Compromise Risk: HIGH - Initiating Emergency Data Purge...
+All access privileges revoked. Disconnecting from Network...
+Mission Failed: You have been apprehended by Cryptex Security.
+Redirecting to Security Office... Please remain calm.
+SYSTEM LOCKDOWN IN EFFECT. EXIT IMMEDIATELY.
+
+# FIREWALL BLOCKED LINES
+FIREWALL BREACH ATTEMPT FAILED: Access Blocked by Cryptex Defense Systems!
+Security Alert: Unauthorized Firewall Bypass Detected...
+Threat Level: HIGH - Countermeasures Engaged.
+Network Security Protocols Activated: All Access Points Locked Down.
+Warning: Intrusion attempt recorded at critical network nodes.
+User ID: AGENT-404 | Location Flagged: NETWORK NODE A7
+Timestamp: 2024-10-26 15:42:09
+Alert: Network isolation initiated to prevent further access.
+Firewall Logs: Multiple Failed Access Attempts Recorded.
+Security Response: Intrusion Prevention System Active - Enhanced Monitoring Engaged.
+Data Integrity Risk: ELEVATED - Secure Backup Initiated.
+User privileges revoked. Disconnecting unauthorized session...
+Mission Status: FAILED - Firewall Unbreached.
+Redirection to Containment Procedures... Please remain compliant.
+SYSTEM DISCONNECTING. ALL ACCESS TERMINATED.

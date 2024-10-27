@@ -8,7 +8,7 @@ from PasswordCrack import play_game_1
 from StartingScreen import Story
 from Intro import running_intro
 from HomeScreen import HomeScreenMenu
-from Firewall import pattern_recognition, maze_navigation, trigger_firewall_minigame
+from Firewall import trigger_firewall_minigame
 import random
 
 from WinnerScreen import display
@@ -24,84 +24,29 @@ current_state = MENU
 
 
 # Story lines for the intro
-story_lines = [
-    "Connecting to secure network...",
-    "Authentication successful.",
-    "Welcome, Agent X.",
-    "Current mission: Infiltrate the mainframe of Ginky CO.",
-    f"Identifying vulnerable IPs... {ips}",
-    "These weak points are your gateways. Proceed with caution.",
-    "Gather all classified data and avoid detection.",
-    "Attempt to connect to the correct IP to begin your mission..."
-]
+def load_lines_from_file(filename):
+    lines = {}
+    with open(filename, 'r') as file:
+        current_section = None
+        for line in file:
+            line = line.strip()
+            if line.startswith('#'):
+                current_section = line[2:]  # Remove the '#' and space
+                lines[current_section] = []
+            elif current_section:
+                lines[current_section].append(line)
+    return lines
 
-winning_line = ["ACCESS GRANTED: Welcome, Agent...",
-    "System Breach Confirmed. Gaining Access to Corporate Data Servers...",
-    "Security Clearance Level: 9 - Top Secret Access Enabled",
-    "Decrypting Files...",
-    "Loading Classified Data...",
-    "",
-    "Name: John Doe | Position: Head of R&D | ID: JDOE-937",
-    "Email: john.doe@corporation.com | Phone: (555) 0198-273",
-    "Last Login: 2024-10-23 14:35:12",
-    " ",
-    "Name: Sarah Blake | Position: Director of Finance | ID: SBLK-102",
-    "Email: sarah.blake@corporation.com | Phone: (555) 0145-389",
-    "Last Login: 2024-10-21 08:20:05",
-    "",
-    "Name: Dr. Eleanor Chen | Position: Chief Scientist | ID: ECHE-553",
-    "Email: eleanor.chen@corporation.com | Phone: (555) 0179-552",
-    "Last Login: 2024-10-20 17:58:30",
-    "",
-    "Warning: Security Protocol Activated!",
-    "Routing through Secure Proxy... Masking IP Address...",
-    "Accessing Financial Records... || Loading Sensitive Company Intelligence...",
-    "File Download Complete. Exiting System...",
-    "Mission Accomplished. Disconnecting from Network..."]
-
-losing_lines = [
-    "ACCESS DENIED: Intrusion Detected!",
-    "System Alert: Unauthorized Access Attempted...",
-    "Security Clearance Level: LOW - Immediate Lockdown Engaged",
-    "Tracing IP Address... Initiating Countermeasures...",
-    "",
-    "Warning: Your activities have been logged.",
-    "User ID: AGENT-404 | Last Known Location: SERVER ROOM 3A",
-    "Timestamp: 2024-10-26 15:42:09",
-    "",
-    "Alert: Security personnel dispatched to your location.",
-    "Camera Feed Activated: Visual Confirmation Required...",
-    "",
-    "Security Protocol: User Detained for Further Investigation.",
-    "Data Compromise Risk: HIGH - Initiating Data Purge...",
-    "All access privileges revoked. Disconnecting from Network...",
-    "",
-    "Mission Failed: You have been caught.",
-    "Redirecting to Security Office... Please remain calm.",
-    "SYSTEM LOCKDOWN IN EFFECT. EXIT IMMEDIATELY."
-]
-
-firewall_blocked_lines = [
-    "FIREWALL BREACH ATTEMPT FAILED: Access Blocked!",
-    "Security Alert: Unauthorized Firewall Bypass Detected...",
-    "Threat Level: HIGH - Countermeasures Engaged.",
-    "Network Security Protocols Activated: All Access Points Locked Down.",
-    "",
-    "Warning: Intrusion attempt recorded at critical nodes.",
-    "User ID: AGENT-404 | Location Flagged: NETWORK NODE A7",
-    "Timestamp: 2024-10-26 15:42:09",
-    "",
-    "Alert: Network isolation initiated to prevent further access.",
-    "Firewall Logs: Failed Access Attempts - Multiple Alerts Generated.",
-    "",
-    "Security Response: Intrusion Prevention System Active - Monitoring Enhanced.",
-    "Data Integrity Risk: ELEVATED - Secure Backup Initiated.",
-    "User privileges revoked. Disconnecting unauthorized session...",
-    "",
-    "Mission Status: FAILED - Firewall Unbreached.",
-    "Redirection to Containment Procedures... Please remain compliant.",
-    "SYSTEM DISCONNECTING. ALL ACCESS TERMINATED."
-]
+# Load story lines from the combined text file
+story_data = load_lines_from_file('story_data.txt')
+story_lines = story_data['STORY LINES']
+story_lines = [line.replace('{ips}', str(ips)) for line in story_lines]
+winning_line = story_data['WINNING LINES']
+losing_lines = story_data['LOSING LINES']
+firewall_blocked_lines = story_data['FIREWALL BLOCKED LINES']
+print (story_lines, winning_line, losing_lines, firewall_blocked_lines)
+print(important_ip)
+print(ips)
 
 def main():
     global current_state

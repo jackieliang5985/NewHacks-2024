@@ -72,8 +72,8 @@ def play_game_1():
     storyline = [
         "Welcome, Agent X.",
         "You've been given a hint of some 'vulnerability'",
-        "within Ginky's bank account.",
-        "Your task is to find out what his password is,",
+        "within Cryptex Intelligence's company bank account.",
+        "Your task is to find out what their password is,",
         " but beware; you only have a few tries.",
         "We've found some information; please press h"
     ]
