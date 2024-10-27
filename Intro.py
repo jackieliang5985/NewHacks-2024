@@ -14,7 +14,7 @@ def running_intro(screen, font, story_lines, main, story):
         story.draw()
         story.draw_input()
 
-        if story.input_text.lower() == important_ip and len(story.finished_lines) == len(story.lines):
+        if story.input_text.lower() == 'hi' or len(story.finished_lines) == len(story.lines):
             main()
 
         pygame.display.flip()

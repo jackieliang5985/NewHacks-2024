@@ -64,7 +64,8 @@ def game(screen, font):
                             story.add_line("Game starting...")
                             waiting_for_input = False
                             time.sleep(1)  # Pause before starting the game
-                            words(screen, font, story)
+                            win_state = words(screen, font, story)
+                            return win_state
                         else:
                             story.add_line("Please type 'ready' to start.")
                             input_text = ""  # Clear input if not ready
@@ -83,9 +84,10 @@ def words(screen, font, story):
         # Check if the answer is incorrect
         if answer.strip().lower() != word:
             story.add_line("INCORRECT, YOU HAVE BEEN COMPROMISED!")
-            break
+            return False
     else:
         story.add_line("SUCCESS! YOU HAVE PASSED THE TYPING TASK.")
+        return True
 
     # Display the final message
     while True:
@@ -139,10 +141,10 @@ def timer(wordie, time, screen, font, story):
         pygame.display.flip()  # Update the display
 
 
-# Pygame initialization
+"""# Pygame initialization
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
 pygame.display.set_caption("Typing Task")
 font = pygame.font.Font(None, 36)
 game(screen, font)
-pygame.quit()
+pygame.quit()"""

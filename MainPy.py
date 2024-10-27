@@ -1,7 +1,12 @@
+from tabnanny import check
+
 import pygame
 import sys
 
+from SpeedType import game
+from Decryptor import decryptor
 from Functions import ips, important_ip
+from PasswordCrack import play_game_1
 from StartingScreen import Story
 from Intro import running_intro
 from HomeScreen import HomeScreenMenu
@@ -69,18 +74,45 @@ def main():
         # Add game handling logic based on current_state
         if current_state == 1:
             print("Starting Game 1...")
-            # Call game 1 function or logic here
+            check_win1 = play_game_1()
+            if not check_win1:
+                print("REACHED")
+                game_running = False
+                pygame.quit()
+                sys.exit()
+                #call losing window
+
+            completed_games.append(current_state)
             current_state = 0  # Reset back to home screen after game
+
         elif current_state == 2:
             print("Starting Game 2...")
-            # Call game 2 function or logic here
+            check_win2 = decryptor(screen, font)
+            if not check_win2:
+                print("REACHED")
+                game_running = False
+                pygame.quit()
+                sys.exit()
+
+            completed_games.append(current_state)
             current_state = 0  # Reset back to home screen after game
+
         elif current_state == 3:
-            print("Starting Game 3...")
-            # Call game 3 function or logic here
+            check_win2 = game(screen, font)
+            if not check_win2:
+                print("REACHED")
+                game_running = False
+                pygame.quit()
+                sys.exit()
+
+            completed_games.append(current_state)
             current_state = 0  # Reset back to home screen after game
 
         pygame.display.flip()
+
+        if 1 in completed_games and 2 in completed_games and 3 in completed_games:
+            game_running = False
+            #winner screen
 
 story = Story(screen, font, story_lines)
 running_intro(screen, font, story_lines, main, story)

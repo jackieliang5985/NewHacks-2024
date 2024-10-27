@@ -153,6 +153,7 @@ def decryptor(screen, font):
                         story.add_feedback("FAIL" if attempts1 > 0 else "YOU'VE BEEN COMPROMISED")
                     if attempts1 == 0:
                         running = False
+                        return False
 
                 # Second stage: Caesar decryption
                 elif correct1 and not correct2:
@@ -164,6 +165,7 @@ def decryptor(screen, font):
                         story.add_feedback("FAIL" if attempts2 > 0 else "YOU'VE BEEN COMPROMISED")
                     if attempts2 == 0:
                         running = False
+                        return False
 
         pygame.display.flip()
 
@@ -172,15 +174,16 @@ def decryptor(screen, font):
             story.add_feedback("SUCCESSFULLY DECRYPTED")
             pygame.time.delay(3000)  # Keep "Correct!" message visible for 3 seconds
             running = False
+            return True
 
 
     pygame.quit()
 
 
-# Pygame initialization
+"""# Pygame initialization
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
 pygame.display.set_caption("Decryptor Mini-Game")
 font = pygame.font.Font(None, 28)
 decryptor(screen, font)
-pygame.quit()
+pygame.quit()"""

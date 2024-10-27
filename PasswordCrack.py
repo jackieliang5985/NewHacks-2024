@@ -127,4 +127,4 @@ def play_game_1():
 
 
 # Start the game
-play_game_1()
+#play_game_1()
