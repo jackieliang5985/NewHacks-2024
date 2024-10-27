@@ -85,7 +85,7 @@ def main():
         timer_text = f"{elapsed_minutes:02}:{elapsed_seconds:02}"  # Format as MM:SS
 
         # Check if we should trigger the firewall
-        if current_time - last_firewall_trigger > 10000:  # 2 minutes in milliseconds
+        if current_time - last_firewall_trigger > 120000:  # 2 minutes in milliseconds
             last_firewall_trigger = current_time  # Update the last trigger time
             trigger_firewall_minigame(screen)  # Call the function to trigger the firewall
 
@@ -154,4 +154,3 @@ story = Story(screen, font, story_lines)
 running_intro(screen, font, story_lines, main, story)
 pygame.quit()
 sys.exit()
-
