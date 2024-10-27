@@ -81,6 +81,27 @@ losing_lines = [
     "SYSTEM LOCKDOWN IN EFFECT. EXIT IMMEDIATELY."
 ]
 
+firewall_blocked_lines = [
+    "FIREWALL BREACH ATTEMPT FAILED: Access Blocked!",
+    "Security Alert: Unauthorized Firewall Bypass Detected...",
+    "Threat Level: HIGH - Countermeasures Engaged.",
+    "Network Security Protocols Activated: All Access Points Locked Down.",
+    "",
+    "Warning: Intrusion attempt recorded at critical nodes.",
+    "User ID: AGENT-404 | Location Flagged: NETWORK NODE A7",
+    "Timestamp: 2024-10-26 15:42:09",
+    "",
+    "Alert: Network isolation initiated to prevent further access.",
+    "Firewall Logs: Failed Access Attempts - Multiple Alerts Generated.",
+    "",
+    "Security Response: Intrusion Prevention System Active - Monitoring Enhanced.",
+    "Data Integrity Risk: ELEVATED - Secure Backup Initiated.",
+    "User privileges revoked. Disconnecting unauthorized session...",
+    "",
+    "Mission Status: FAILED - Firewall Unbreached.",
+    "Redirection to Containment Procedures... Please remain compliant.",
+    "SYSTEM DISCONNECTING. ALL ACCESS TERMINATED."
+]
 
 def main():
     global current_state
@@ -106,9 +127,14 @@ def main():
         timer_text = f"{elapsed_minutes:02}:{elapsed_seconds:02}"  # Format as MM:SS
 
         # Check if we should trigger the firewall
-        if current_time - last_firewall_trigger > 60000:  # 1 minutes in milliseconds
+        if current_time - last_firewall_trigger > 60000:  # 1 minutes in milliseconds 60000
             last_firewall_trigger = current_time  # Update the last trigger time
-            trigger_firewall_minigame(screen)  # Call the function to trigger the firewall
+            firewall_success = trigger_firewall_minigame(screen)  # Call the function to trigger the firewall
+
+            if not firewall_success:  # If firewall mini-game failed
+                game_running = False
+                lose_story_by_firewall = Story(screen, font, firewall_blocked_lines)
+                display(screen, font, lose_story_by_firewall)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

@@ -190,7 +190,6 @@ def trigger_firewall_minigame(screen):
 
     if not firewall_passed:
         print("Failed to bypass the firewall! Exiting game.")
-        pygame.quit()
-        sys.exit()  # Close the game if they fail
+        return False
     else:
-        print("Firewall bypassed!")  # Continue the game if they succeed
+        return True
