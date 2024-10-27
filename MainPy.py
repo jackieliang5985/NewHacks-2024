@@ -1,9 +1,5 @@
-from tabnanny import check
-
 import pygame
 import sys
-
-from plotly.graph_objs.bar import Stream
 
 from SpeedType import game
 from Decryptor import decryptor
