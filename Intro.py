@@ -1,6 +1,10 @@
 import pygame
 from Functions import important_ip
 def running_intro(screen, font, story_lines, main, story):
+    pygame.mixer.init()
+    pygame.mixer.music.load('hackermusic.mp3')  # Update this with your actual path
+    pygame.mixer.music.set_volume(0.5)  # Set volume to 50%
+    pygame.mixer.music.play(-1)  # Play the music indefinitely
     running = True
     while running:
         for event in pygame.event.get():
