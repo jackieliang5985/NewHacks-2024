@@ -1,5 +1,3 @@
-from tabnanny import check
-
 import pygame
 import sys
 
@@ -13,7 +11,7 @@ from HomeScreen import HomeScreenMenu
 from Firewall import pattern_recognition, maze_navigation, trigger_firewall_minigame
 import random
 
-from WinnerScreen import winner
+from WinnerScreen import display
 
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
@@ -60,6 +58,29 @@ winning_line = ["ACCESS GRANTED: Welcome, Agent...",
     "Accessing Financial Records... || Loading Sensitive Company Intelligence...",
     "File Download Complete. Exiting System...",
     "Mission Accomplished. Disconnecting from Network..."]
+
+losing_lines = [
+    "ACCESS DENIED: Intrusion Detected!",
+    "System Alert: Unauthorized Access Attempted...",
+    "Security Clearance Level: LOW - Immediate Lockdown Engaged",
+    "Tracing IP Address... Initiating Countermeasures...",
+    "",
+    "Warning: Your activities have been logged.",
+    "User ID: AGENT-404 | Last Known Location: SERVER ROOM 3A",
+    "Timestamp: 2024-10-26 15:42:09",
+    "",
+    "Alert: Security personnel dispatched to your location.",
+    "Camera Feed Activated: Visual Confirmation Required...",
+    "",
+    "Security Protocol: User Detained for Further Investigation.",
+    "Data Compromise Risk: HIGH - Initiating Data Purge...",
+    "All access privileges revoked. Disconnecting from Network...",
+    "",
+    "Mission Failed: You have been caught.",
+    "Redirecting to Security Office... Please remain calm.",
+    "SYSTEM LOCKDOWN IN EFFECT. EXIT IMMEDIATELY."
+]
+
 
 def main():
     global current_state
@@ -113,9 +134,8 @@ def main():
             if not check_win1:
                 print("REACHED")
                 game_running = False
-                pygame.quit()
-                sys.exit()
-                # call losing window
+                lose_story = Story(screen, font, losing_lines)
+                display(screen, font, lose_story)
 
             completed_games.add(current_state)
             current_state = 0  # Reset back to home screen after game
@@ -126,8 +146,8 @@ def main():
             if not check_win2:
                 print("REACHED")
                 game_running = False
-                pygame.quit()
-                sys.exit()
+                lose_story = Story(screen, font, losing_lines)
+                display(screen, font, lose_story)
 
             completed_games.add(current_state)
             current_state = 0  # Reset back to home screen after game
@@ -137,8 +157,8 @@ def main():
             if not check_win2:
                 print("REACHED")
                 game_running = False
-                pygame.quit()
-                sys.exit()
+                lose_story = Story(screen, font, losing_lines)
+                display(screen, font, lose_story)
 
             completed_games.add(current_state)
             current_state = 0  # Reset back to home screen after game
@@ -148,7 +168,7 @@ def main():
         if completed_games == {1, 2, 3}:
             game_running = False
             win_story = Story(screen, font, winning_line)
-            winner(screen, font, win_story)
+            display(screen, font, win_story)
 
 story = Story(screen, font, story_lines)
 running_intro(screen, font, story_lines, main, story)

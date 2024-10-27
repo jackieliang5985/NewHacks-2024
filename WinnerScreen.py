@@ -1,7 +1,7 @@
 import pygame
 import time
 
-def winner(screen, font, story):
+def display(screen, font, story):
     running = True
     while running:
         for event in pygame.event.get():
