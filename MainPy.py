@@ -61,8 +61,8 @@ def main():
         if elapsed_time > 300000:  # 5 minutes
             print("REACHED")
             game_running = False
-            pygame.quit()
-            sys.exit()
+            lose_story = Story(screen, font, losing_lines)
+            display(screen, font, lose_story)
 
         elapsed_minutes = (elapsed_time // 60000) % 60
         elapsed_seconds = (elapsed_time // 1000) % 60
