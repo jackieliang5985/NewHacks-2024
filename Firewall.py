@@ -108,7 +108,7 @@ def maze_navigation(screen):
                     pygame.draw.rect(screen, GREEN, (x * 40, y * 40, 40, 40))  # Exit
 # Timer
         elapsed_time = (pygame.time.get_ticks() - start_ticks) / 1000
-        remaining_time = max(0, 15 - elapsed_time)
+        remaining_time = max(0, 17 - elapsed_time)
         font = pygame.font.Font(pygame.font.get_default_font(), 26)  # Choose font size
         time_surface = font.render(f"Time Remaining: {int(remaining_time)}s", True, (0, 255, 0))
         screen.blit(time_surface, (10, 10))
@@ -121,7 +121,7 @@ def maze_navigation(screen):
         pygame.display.flip()
 
         elapsed_time = (pygame.time.get_ticks() - start_ticks) / 1000 # seconds
-        if elapsed_time > 15:  # 15 sec limit
+        if elapsed_time > 17:  # 15 sec limit (2 sec animation)
             print("Time's up! Access Denied!")
             return False
 
