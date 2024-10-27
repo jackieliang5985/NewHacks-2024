@@ -44,9 +44,6 @@ story_lines = [line.replace('{ips}', str(ips)) for line in story_lines]
 winning_line = story_data['WINNING LINES']
 losing_lines = story_data['LOSING LINES']
 firewall_blocked_lines = story_data['FIREWALL BLOCKED LINES']
-print (story_lines, winning_line, losing_lines, firewall_blocked_lines)
-print(important_ip)
-print(ips)
 
 def main():
     global current_state
