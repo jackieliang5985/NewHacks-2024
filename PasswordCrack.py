@@ -10,7 +10,7 @@ password_levels = {
 }
 
 # Randomly select a password level and the corresponding password
-password_level = random.choice(list(password_levels.keys()))
+password_level = "easy"
 password = random.choice(password_levels[password_level])
 
 # Initialize shared variables
@@ -35,15 +35,16 @@ def dictionary_attack(guess):
     if guess.strip().lower() == password.lower():
         game_over = True
         win = True  # Set win to True if the guess is correct
-        return "Access Granted!"
+        return "Access Granted!"  # Ensure this is a string
 
     # End game if maximum attempts are reached
     if attempts >= 3:
         game_over = True
         win = False  # Set win to False if max attempts reached
-        return "You've exceeded the maximum number of attempts. Access Denied."
+        return "You've exceeded the maximum number of attempts."  # Split into two lines
 
-    return "Incorrect guess."
+    return "Incorrect guess."  # Ensure this is a string
+
 
 
 def get_hint():
@@ -53,8 +54,12 @@ def get_hint():
         return "Hint already used!"
     hint_used = True
     if password_level == "hard":
-        return f"Hint: The password comprises a widely used phrase, starting with '{password[0]}', and ending with '{password[-1]}'."
-    return f"Hint: The password starts with '{password[0]}' and has {len(password)} characters."
+        return [
+            f"Hint: The password comprises a widely used phrase,",
+            f"starting with '{password[0]}', and ending with '{password[-1]}'."
+        ]
+
+    return [f"Hint: The password starts with '{password[0]}' and has {len(password)} characters."]
 
 
 def play_game_1():
@@ -75,7 +80,7 @@ def play_game_1():
 
     story = Story(screen, font, storyline, 10)
     feedback = ""  # Variable to hold feedback messages
-    hint_message = ""  # Variable to hold the hint message
+    hint_message = []  # Changed to a list to hold multiple lines
 
     while True:  # Main game loop
         for event in pygame.event.get():
@@ -96,7 +101,7 @@ def play_game_1():
                 elif event.key == pygame.K_BACKSPACE:
                     story.input_text = story.input_text[:-1]
                 elif event.key == pygame.K_h:  # Hint when 'h' is pressed
-                    hint_message = get_hint()
+                    hint_message = get_hint()  # This will be a list now
 
         # Update the story display
         story.update()
@@ -113,8 +118,9 @@ def play_game_1():
         screen.blit(feedback_surface, (50, 550))  # Display feedback
 
         # Render and draw hint message
-        hint_surface = font.render(hint_message, True, (255, 255, 0))  # Yellow for hints
-        screen.blit(hint_surface, (50, 530))
+        for i, line in enumerate(hint_message):
+            hint_surface = font.render(line, True, (255, 255, 0))  # Yellow for hints
+            screen.blit(hint_surface, (50, 525 + i * 30))  # Adjust the vertical position for each line
 
         # Update display
         pygame.display.flip()
