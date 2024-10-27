@@ -5,7 +5,7 @@ from Functions import ips, important_ip
 from StartingScreen import Story
 from Intro import running_intro
 from HomeScreen import HomeScreenMenu
-from Firewall import pattern_recognition, maze_navigation
+from Firewall import pattern_recognition, maze_navigation, trigger_firewall_minigame
 import random
 
 pygame.init()
@@ -42,17 +42,9 @@ def main():
         current_time = pygame.time.get_ticks()  # Get current time
 
         # Randomly trigger the firewall every 2 Mins (20000 milliseconds)
-        if current_time - last_firewall_trigger > 120000:  # Check if 2 Mins have passed
-            last_firewall_trigger = current_time  # Reset the timer
-            game_selected = random.choice([pattern_recognition, maze_navigation])
-
-            if game_selected(screen):
-                print("Firewall bypassed!")
-            else:
-                game_running = False
-                pygame.quit()
-                sys.exit()
-                # print("Failed to bypass the firewall!")
+        if current_time - last_firewall_trigger > 2000: #120000
+            last_firewall_trigger = current_time
+            trigger_firewall_minigame(screen)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
