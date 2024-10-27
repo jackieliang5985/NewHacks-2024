@@ -6,7 +6,7 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
-
+font = pygame.font.Font(pygame.font.get_default_font(), 18)
 
 def pattern_recognition(screen):
     pattern_length = random.randint(2, 4)
@@ -144,3 +144,53 @@ def maze_navigation(screen):
                     return True  # Successfully navigated the maze
 
     return False  # Player did not reach the exit
+
+def display_firewall_warning(screen, font):
+    warning_text = "ERROR, ERROR, FIREWALL BLOCKING YOUR CONNECTION"
+    base_color = (139, 0, 0)  # Dark red for a scary vibe
+    flash_duration = 2000  # Total duration of flashing (in milliseconds)
+    flash_interval = 200   # Interval for each flash (in milliseconds)
+    end_time = pygame.time.get_ticks() + flash_duration  # End time for flashing
+
+    # Flashing loop with eerie effects
+    while pygame.time.get_ticks() < end_time:
+        current_time = pygame.time.get_ticks()
+
+        # Flash colors based on time for a scary effect
+        if (current_time // flash_interval) % 2 == 0:
+            screen.fill((0, 0, 0))  # Black background
+        else:
+            screen.fill(base_color)  # Dark red background for flash effect
+
+        # Create shaky, glitchy effect for the text
+        offset_x = random.randint(-5, 5)  # Random horizontal jitter
+        offset_y = random.randint(-5, 5)  # Random vertical jitter
+        warning_surface = font.render(warning_text, True, (255, 255, 255))  # White text
+
+        # Display warning text with random position shifts
+        screen.blit(warning_surface, (100 + offset_x, 300 + offset_y))
+
+        pygame.display.flip()
+        pygame.time.delay(50)  # Delay to control flashing speed
+
+    # Quick fade-out effect after flashing
+    for alpha in range(255, 0, -15):
+        screen.fill((0, 0, 0))
+        warning_surface = font.render(warning_text, True, (255, 0, 0))
+        warning_surface.set_alpha(alpha)
+        screen.blit(warning_surface, (100, 300))
+        pygame.display.flip()
+        pygame.time.delay(30)
+
+def trigger_firewall_minigame(screen):
+    display_firewall_warning(screen, font)  # Show firewall warning
+
+    # Choose a firewall minigame and determine if the player passed
+    firewall_passed = random.choice([pattern_recognition, maze_navigation])(screen)
+
+    if not firewall_passed:
+        print("Failed to bypass the firewall! Exiting game.")
+        pygame.quit()
+        sys.exit()  # Close the game if they fail
+    else:
+        print("Firewall bypassed!")  # Continue the game if they succeed
